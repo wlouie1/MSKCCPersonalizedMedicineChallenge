@@ -2,6 +2,7 @@
 
 This is my solution to the [Personalized Medicine: Redefining Cancer Treatment](https://www.kaggle.com/c/msk-redefining-cancer-treatment) challenge on Kaggle. I have made some modifications to the original model that generated the final submission since the end of the competition.
 The code here would generate a model (trained on 80% of the Stage 1 training data) with the following scores:
+###### Raw Labels Model (9 classes)
 * Validation data (20% of training data):
 	* Log Loss: 1.1017
 * Stage 1 test data:
@@ -34,14 +35,14 @@ And likelihood:
 3. Inconclusive
 
 The code also generates 2 other models, trained on the condensed class labels and likelihood labels:
-###### Condensed Labels Model
+###### Condensed Labels Model (5 classes)
 * Validation data (20% of training data):
 	* Log Loss: 0.5538
 * Stage 1 test data:
 	* Log Loss: 0.6201 (Accuracy: 76.1%)
 * Stage 2 test data:
 	* Log Loss: 2.9057 (Accuracy: 20%)
-###### Likelihood Labels Model
+###### Likelihood Labels Model (3 classes)
 * Validation data (20% of training data):
 	* Log Loss: 0.6431
 * Stage 1 test data:
