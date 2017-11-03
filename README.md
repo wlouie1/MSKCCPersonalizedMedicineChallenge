@@ -36,7 +36,7 @@ The code here generates 3 models with the same arhitecture, each trained (on 80%
 | Log Loss | 0.6431 | 0.6999 | 1.0935 |
 | Accuracy | - | 66.9% | 34.4% |
 
-The scores are not especially impressive (among other reasons, the model is trained on only 80% of the original training data, and hyperparameters are not tuned), but the approach is versatile and intrepretable. The solution also ONLY uses the provided text data in the training set, so there are a lot of potential improvements to be made in using the provided Gene/Variation data, and external data. Please see [Usage and Approach](#usage-and-approach) for more details on the approach, visualizations, and suggestions for further improvements.
+The scores are not especially impressive (among other reasons, the model is trained on only 80% of the original training data, and hyperparameters are not tuned), but the approach is versatile and intrepretable. The solution also ONLY uses the provided text data in the training set, so there are a lot of potential improvements to be made in using external data. Please see [Usage and Approach](#usage-and-approach) for more details on the approach and visualizations.
 
 ## Usage and Approach
 
@@ -76,7 +76,20 @@ From the root directory, run [`main.py`](wordEmbeddings/main.py) with `train` fl
 python main.py train
 ```
 What that does is:
-1. 
+1. Load the Stage 1 Training data, Stage 1 Test data, and Stage 2 Test data; the machine generated instances of the test data are filtered out.
+2. Preprocess the data:
+   1. 
+3. Build and train models. The 3 models (Raw Labels, Condensed Labels, Likelihood Labels) all have essentially the same architecture, the only difference being the last softmax layer outputs either 9, 5, or 3 classes:
+   * The model artchitecture is derived from the paper, [Hierarchical Attention Networks for Document Classification (Yang et al.)](https://www.cs.cmu.edu/~diyiy/docs/naacl16.pdf).
+   * Figure 2 of that paper shows a Hierarchical Attention Network, featuring a word sequence encoder, a word-level attention layer, a sentence encoder, and a sentence-level attention layer. Refer to the paper for more details, but the general idea is that given a document with sentences and words, the sentences and words are each encoded using bidirection GRUs, and two levels of attention mechanisms are applied at the word and sentence-level to enable the network to attend to important content when constructing the document representation. The resulting document representation is then fed to a softmax layer for classification. A property of this network architecture is that the learned word and sentence level attention weights can be used to visualize and interpret the model.
+   * In our case, sentences relevant to the gene in question, and sentences relevant to the variation in question are extracted separately. Two Hierarchical Attention Networks are constructed, each taking the gene text and variation text as inputs separately. The resulting gene document vector `g` and variation document vector `v` are concatenated, and fed in a softmax layer for classification (either 9, 5, or 3 classes as output):
+
+   * The above network architecture is used to build the Raw Labels Model, the Condensed Labels Model, and the Likelihood Labels Model.
+   * The gene and variation text are first truncated as follows: keep only the first 200 sentences, and keep only the first 100 words of each sentences; any sentences and words less than desired are padded with zeros.
+   * The resulting texts are embedded using our word2vec model (see [Train word2vec Model](#train-word2vec-model)); each word embedding dimeion is 200.
+   * The GRU dimension is set to be 50 in the Raw Labels Model, and 25 in the Condensed and Likelihood Models. These values are chosen somewhat arbitrarily--they're values at which my laptop can handle in a reasonable time.
+   * For training, a mini-batch size of 32 is used, and the Raw Labels Model, Condensed Labels Mode, and Likelihood Models are trained for 5, 6, and 6 epochs respectively (epochs that reached lowest score on the 20% validation set).
+ 4. The weights of the resulting models are saved in `"raw_MEDLINE60iterw2v_GRU50" + ".{epoch:02d}-{loss:.4f}-{val_loss:.4f}-{test_loss:.4f}-{test2_loss:.4f}.hdf5"`, `"condensed_class_MEDLINE60_GRU25" + ".{epoch:02d}-{loss:.4f}-{val_loss:.4f}-{test_loss:.4f}-{test2_loss:.4f}.hdf5"`, and `"likelihood_MEDLINE60_GRU25" + ".{epoch:02d}-{loss:.4f}-{val_loss:.4f}-{test_loss:.4f}-{test2_loss:.4f}.hdf5"`. `test_loss` and `test2_loss` are the Stage 1 and Stage 2 test data log loss values respectively, so if I set the numpy and random seeds properly in my code, you should yield the following files: `raw_MEDLINE60iterw2v_GRU50.04-0.7716-1.1017-1.1013-3.6090.hdf5`, `condensed_class_MEDLINE60_GRU25.06-0.3916-0.5538-0.6201-2.9057.hdf5`, and `likelihood_MEDLINE60_GRU25.05-0.5529-0.6431-0.6999-1.0935.hdf5`. If your values are slightly different, remember to change the weights file names accordinging in [`main.py`](wordEmbeddings/main.py) before you build the visualizations (see [Visualize and Interpret Models](#visualize-and-interpret-models)).
 
 ### Visualize and Interpret Models
 The visualizations of the models' sentence and word weights assignment to the Stage 1 and Stage 2 test data are available here:
