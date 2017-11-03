@@ -5,17 +5,17 @@ This is my approach to the [Personalized Medicine: Redefining Cancer Treatment](
 The competition only asks for predictions for 9 classes, but one can also think of them as a combination of 5 condensed classes and 3 likelihood classes:
 
 <center>
-Raw Classes (9) | Condensed Classes (5) | Likelihood Classes (3)
------------- | ------------- | -------------
-Likely Loss-of-function | Loss-of-function | Likely
-Likely Gain-of-function | Gain-of-function | Likely
-Neutral | Neutral | Sure
-Loss-of-function | Loss-of-function | Sure
-Likely Neutral | Neutral | Likely
-Inconclusive | Inconclusive | Inconclusive
-Gain-of-function | Gain-of-function | Sure
-Likely Switch-of-function | Switch-of-function | Likely
-Switch-of-function | Switch-of-function | Sure
+| Raw Classes (9) | Condensed Classes (5) | Likelihood Classes (3) |
+| ------------ | ------------- | ------------- |
+| Likely Loss-of-function | Loss-of-function | Likely |
+| Likely Gain-of-function | Gain-of-function | Likely |
+| Neutral | Neutral | Sure |
+| Loss-of-function | Loss-of-function | Sure |
+| Likely Neutral | Neutral | Likely |
+| Inconclusive | Inconclusive | Inconclusive |
+| Gain-of-function | Gain-of-function | Sure |
+| Likely Switch-of-function | Switch-of-function | Likely |
+| Switch-of-function | Switch-of-function | Sure |
 </center>
 
 The code here generates 3 models with the same arhitecture, each trained (on 80% of the Stage 1 training data) separately to predict the Raw, Condensed, and Likelihood classes, with the following results on the Stage 1 and Stage 2 test data (possibly unreliable, see [this](https://www.kaggle.com/c/msk-redefining-cancer-treatment/discussion/40676) and [this](https://www.kaggle.com/c/msk-redefining-cancer-treatment/discussion/42129)):
