@@ -42,6 +42,7 @@ The code also generates 2 other models, trained on the condensed class labels an
 	* Log Loss: 0.6201 (Accuracy: 76.1%)
 * Stage 2 test data:
 	* Log Loss: 2.9057 (Accuracy: 20%)
+
 ###### Likelihood Labels Model (3 classes)
 * Validation data (20% of training data):
 	* Log Loss: 0.6431
