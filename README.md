@@ -36,7 +36,7 @@ The code here generates 3 models with the same arhitecture, each trained (on 80%
 | Log Loss | 0.6431 | 0.6999 | 1.0935 |
 | Accuracy | - | 66.9% | 34.4% |
 
-The scores are not especially impressive (among other reasons, the model is trained on only 80% of the original training data, and hyperparameters are not tuned), but the approach is versatile and intrepretable. The solution also ONLY uses the provided text data in the training set, so there are a lot of potential improvements to be made in using the provided Gene/Variation data, and external data. Please see [here]() for more details on the approach, visualizations, and suggestions for further improvements.
+The scores are not especially impressive (among other reasons, the model is trained on only 80% of the original training data, and hyperparameters are not tuned), but the approach is versatile and intrepretable. The solution also ONLY uses the provided text data in the training set, so there are a lot of potential improvements to be made in using the provided Gene/Variation data, and external data. Please see [here](#usage) for more details on the approach, visualizations, and suggestions for further improvements.
 
 ## Usage
 Please see [here]() for more details on the approach and visualizations.
