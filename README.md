@@ -100,7 +100,7 @@ This will generate JSON files in the [`results`](visualization/results/) directo
 ```python
 python -m SimpleHTTPServer
 ```
-And then open up http://localhost:8000/ in a browser such as Chrome. Note that the page may take a few minutes to fully load.
+And then open up http://localhost:8000/ in a browser. Note that the page may take a few minutes to fully load.
 
 ## Dependencies
 Python 2.7.13
