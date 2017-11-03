@@ -39,7 +39,6 @@ The code here generates 3 models with the same arhitecture, each trained (on 80%
 The scores are not especially impressive (among other reasons, the model is trained on only 80% of the original training data, and hyperparameters are not tuned), but the approach is versatile and intrepretable. The solution also ONLY uses the provided text data in the training set, so there are a lot of potential improvements to be made in using the provided Gene/Variation data, and external data. Please see [Usage and Approach](#usage-and-approach) for more details on the approach, visualizations, and suggestions for further improvements.
 
 ## Usage and Approach
-Please see [here]() for more details on the approach and visualizations.
 
 #### Include Data Files
 Populate the [`data`](data/) directory with the competition data files from both stages:
@@ -76,9 +75,20 @@ From the root directory, run [`main.py`](wordEmbeddings/main.py) with `train` fl
 ```python
 python main.py train
 ```
+What that does is:
+1. 
 
 #### Visualize and Interpret Models
-To visualize the model's sentence and word weights assignment to the Stage 1 and Stage 2 test data, run [`main.py`](wordEmbeddings/main.py) with `visualize` flag:
+The visualizations of the models' sentence and word weights assignment to the Stage 1 and Stage 2 test data are available here:
+https://wlouie1.github.io/MSKCCPersonalizedMedicineChallenge/visualization
+
+Note that the page may take a couple minutes to fully load, so be patient. Once it does, it should look something like this:
+
+On the navigation bar on the top, you have the select element at the top right to allow you to select the `ID` of the test data instance, and the corresponding Gene/Variation information on the top left. Shown in the main body of the page are the models results. In the `Filtered and Sorted` mode of the page (default), the sentences are ranked highest weight to lowest weight (what the model attributes as most important to least important), with the opacity of the red color corresponding to the weight values. In each sentence, words are highlighted in blue, and the opacity of the blue corresponds to their weight values (normalized by its sentence weight), i.e. the darker the blue highlight, the more "significant" the word is to the model. The `Full Text View` shows the original given text, not just the texts used to train the models. 
+
+In the screenshot example above, `ID` 651 of the Stage 1 Test data is selected (DIS3/R780K), and the models correctly predict it to be Loss-of-function. The Raw Labels model and the Condensed Labels model both attribute phrases such as `mutations markedly reduced hdis3 exoribonucleolytic activity` and `catalytic mb mutant` as important in classifying the gene variation as Loss-of-function. Not all of them have attributed important sentences and words that make sense, but many of them are in the general right direction if you click around explore other result instances in the test data.
+
+To build the visualizations locally, run [`main.py`](wordEmbeddings/main.py) with `visualize` flag:
 
 ```python
 python main.py visualize
