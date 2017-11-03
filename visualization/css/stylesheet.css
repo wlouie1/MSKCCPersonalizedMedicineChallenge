@@ -1,0 +1,28 @@
+.irrelevantSentence {
+	opacity: 0.5;
+}
+
+.relevantSentence {
+	border-left: solid 5px;
+	padding-left: 5px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.relevantUnusedSentence {
+	border-color: black;
+}
+
+.scoreLabel {
+	font-weight: bold;
+}
+
+.modelScoresDiv {
+	display: inline-block;
+	padding: 5px;
+	margin-bottom: 5px;
+}
+
+/*.scoresDiv {
+	position: fixed;
+}*/

@@ -1,0 +1,3 @@
+ftp://ftp.ncbi.nlm.nih.gov/pubmed/baseline/*.gz
+ftp://ftp.ncbi.nlm.nih.gov/pubmed/updatefiles/*.gz
+ftp://ftp.ncbi.nlm.nih.gov/pub/pmc/oa_bulk/*.xml.tar.gz

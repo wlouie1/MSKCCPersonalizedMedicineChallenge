@@ -1,0 +1,11 @@
+The following files should be in this directory:
+
+stage_2_private_solution.csv
+stage1_solution_filtered.csv
+stage2_sample_submission.csv
+stage2_test_text.csv
+stage2_test_variants.csv
+test_text
+test_variants
+training_text
+training_variants

@@ -1,0 +1,64 @@
+import os
+
+RANDOM_SEED = 42
+NP_RANDOM_SEED = 1337
+
+ROOT = os.getcwd()
+UTILS = os.path.join(ROOT, 'utils')
+
+DATA_ROOT = os.path.join(ROOT, 'data')
+TRAIN_VARIANTS_S1_PATH = os.path.join(DATA_ROOT, 'training_variants')
+TRAIN_TEXT_S1_PATH = os.path.join(DATA_ROOT, 'training_text')
+TEST_VARIANTS_S1_PATH = os.path.join(DATA_ROOT, 'test_variants')
+TEST_TEXT_S1_PATH = os.path.join(DATA_ROOT, 'test_text')
+TEST_S1_LABELS_PATH = os.path.join(DATA_ROOT, 'stage1_solution_filtered.csv')
+
+TEST_VARIANTS_S2_PATH = os.path.join(DATA_ROOT, 'stage2_test_variants.csv')
+TEST_TEXT_S2_PATH = os.path.join(DATA_ROOT, 'stage2_test_text.csv')
+TEST_S2_LABELS_PATH = os.path.join(DATA_ROOT, 'stage_2_private_solution.csv')
+
+BIOLEMMATIZER_PATH = os.path.abspath(os.path.join(UTILS, 'biolemmatizer-core-1.2-jar-with-dependencies.jar'))
+
+TRAIN_GENE_RELEVANT_WORDS_FILE = os.path.join(ROOT, 'TRAIN_GENE_RELEVANT_WORDS_FILE.txt')
+TEST_GENE_RELEVANT_WORDS_FILE = os.path.join(ROOT, 'TEST_GENE_RELEVANT_WORDS_FILE.txt')
+TEST2_GENE_RELEVANT_WORDS_FILE = os.path.join(ROOT, 'TEST2_GENE_RELEVANT_WORDS_FILE.txt')
+
+TRAIN_VAR_RELEVANT_WORDS_FILE = os.path.join(ROOT, 'TRAIN_VAR_RELEVANT_WORDS_FILE.txt')
+TEST_VAR_RELEVANT_WORDS_FILE = os.path.join(ROOT, 'TEST_VAR_RELEVANT_WORDS_FILE.txt')
+TEST2_VAR_RELEVANT_WORDS_FILE = os.path.join(ROOT, 'TEST2_VAR_RELEVANT_WORDS_FILE.txt')
+
+TRAIN_GENE_LEMMA_WORDS_FILE = os.path.join(ROOT, 'TRAIN_GENE_LEMMA_WORDS_FILE.txt')
+TEST_GENE_LEMMA_WORDS_FILE = os.path.join(ROOT, 'TEST_GENE_LEMMA_WORDS_FILE.txt')
+TEST2_GENE_LEMMA_WORDS_FILE = os.path.join(ROOT, 'TEST2_GENE_LEMMA_WORDS_FILE.txt')
+
+TRAIN_VAR_LEMMA_WORDS_FILE = os.path.join(ROOT, 'TRAIN_VAR_LEMMA_WORDS_FILE.txt')
+TEST_VAR_LEMMA_WORDS_FILE = os.path.join(ROOT, 'TEST_VAR_LEMMA_WORDS_FILE.txt')
+TEST2_VAR_LEMMA_WORDS_FILE = os.path.join(ROOT, 'TEST2_VAR_LEMMA_WORDS_FILE.txt')
+
+DOCUMENT_TRAIN_GENE_SENTENCE_WORDS = os.path.join(ROOT, 'DOCUMENT_TRAIN_GENE_SENTENCE_WORDS.p')
+DOCUMENT_TRAIN_VAR_SENTENCE_WORDS = os.path.join(ROOT, 'DOCUMENT_TRAIN_VAR_SENTENCE_WORDS.p')
+DOCUMENT_TEST_GENE_SENTENCE_WORDS = os.path.join(ROOT, 'DOCUMENT_TEST_GENE_SENTENCE_WORDS.p')
+DOCUMENT_TEST_VAR_SENTENCE_WORDS = os.path.join(ROOT, 'DOCUMENT_TEST_VAR_SENTENCE_WORDS.p')
+DOCUMENT_TEST2_GENE_SENTENCE_WORDS = os.path.join(ROOT, 'DOCUMENT_TEST2_GENE_SENTENCE_WORDS.p')
+DOCUMENT_TEST2_VAR_SENTENCE_WORDS = os.path.join(ROOT, 'DOCUMENT_TEST2_VAR_SENTENCE_WORDS.p')
+
+TRAIN_GENE_TEXT = os.path.join(ROOT, 'TRAIN_GENE_TEXT.p')
+TRAIN_VAR_TEXT = os.path.join(ROOT, 'TRAIN_VAR_TEXT.p')
+TEST_GENE_TEXT = os.path.join(ROOT, 'TEST_GENE_TEXT.p')
+TEST_VAR_TEXT = os.path.join(ROOT, 'TEST_VAR_TEXT.p')
+TEST2_GENE_TEXT = os.path.join(ROOT, 'TEST2_GENE_TEXT.p')
+TEST2_VAR_TEXT = os.path.join(ROOT, 'TEST2_VAR_TEXT.p')
+WORD_INDEX = os.path.join(ROOT, 'WORD_INDEX.p')
+
+WORDEMBEDDINGS = os.path.join(ROOT, 'wordEmbeddings')
+
+CUSTOM_MEDLINE_60iter_WORD_EMBEDDINGS_PATH = os.path.join(WORDEMBEDDINGS, 'medline_SHUFFLED_biomedical_embeddings_200_lit_params_win2_60iters')
+CUSTOM_MEDLINE_60iter_WORD_EMBEDDINGS_DIM = 200
+
+ENTITIES_PATH = os.path.join(ROOT, 'entities.dat')
+
+GENE_KEY_WORD = '<GENERELATEDTOKEN>'
+VAR_KEY_WORD = '<VARIATIONRELATEDTOKEN>'
+
+MAX_SENTENCE_LENGTH = 100 # maximum number of words in a sentence
+MAX_DOCUMENT_LENGTH = 200 # maximum number of sentences in the document
