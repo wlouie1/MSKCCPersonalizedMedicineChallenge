@@ -85,7 +85,11 @@ What that does is:
    * In our case, sentences relevant to the gene in question, and sentences relevant to the variation in question are extracted separately. Two Hierarchical Attention Networks are constructed, each taking the gene text and variation text as inputs separately. The resulting gene document vector `g` and variation document vector `v` are concatenated, and fed in a softmax layer for classification (either 9, 5, or 3 classes as output):
 
    * The above network architecture is used to build the Raw Labels Model, the Condensed Labels Model, and the Likelihood Labels Model.
-   * The gene and variation text are first truncated as follows: keep only the first 200 sentences, and keep only the first 100 words of each sentences; any sentences and words less than desired are padded with zeros.
+   * The gene and variation text are first truncated as follows: keep only the first 200 sentences, and keep only the first 100 words of each sentences; any sentences and words less than desired are padded with zeros. The motivation for setting a maximum document size of 200 and maximum sentence length of 100 is based off of the distributions of document and sentence lengths:
+   
+   ![alt text](visualization/resources/train_gene_num_sent_per_doc.png)
+   
+   
    * The resulting texts are embedded using our word2vec model (see [Train word2vec Model](#train-word2vec-model)); each word embedding dimeion is 200.
    * The GRU dimension is set to be 50 in the Raw Labels Model, and 25 in the Condensed and Likelihood Models. These values are chosen somewhat arbitrarily--they're values at which my laptop can handle in a reasonable time.
    * For training, a mini-batch size of 32 is used, and the Raw Labels Model, Condensed Labels Mode, and Likelihood Models are trained for 5, 6, and 6 epochs respectively (epochs that reached lowest score on the 20% validation set).
