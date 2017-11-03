@@ -40,7 +40,7 @@ The scores are not especially impressive (among other reasons, the model is trai
 
 ## Usage and Approach
 
-#### Include Data Files
+### Include Data Files
 Populate the [`data`](data/) directory with the competition data files from both stages:
 ```
 stage_2_private_solution.csv
@@ -55,7 +55,7 @@ training_variants
 ```
 This solution uses custom trained word2vec vectors. To produce them, populate the [`MEDLINE`](wordEmbeddings/PubmedOA_MEDLINE_XML/MEDLINE) directory with [MEDLINE](https://www.nlm.nih.gov/bsd/licensee/) articles. See [`README`](wordEmbeddings/PubmedOA_MEDLINE_XML/README) for more detailed instructions. Note that the word vectors used in this solution are trained on only MEDLINE abstracts; populate the [`PubmedOA`](wordEmbeddings/PubmedOA_MEDLINE_XML/PubmedOA) directory (also see the [`README`](wordEmbeddings/PubmedOA_MEDLINE_XML/README)) and uncomment some lines in [`evidence_filter.py`](wordEmbeddings/evidence_filter.py) if you also want to include articles from the [PubMed Open-Access (OA) subset](http://www.ncbi.nlm.nih.gov/pmc/tools/ftp/).
 
-#### Train word2vec Model
+### Train word2vec Model
 From the [`wordEmbeddings`](wordEmbeddings/) directory, run [`evidence_filter.py`](wordEmbeddings/evidence_filter.py)
 ```python
 python evidence_filter.py
@@ -68,9 +68,9 @@ What that does is:
 5. Preprocess the text (tokenize into sentences, tokenize each sentence into words, lowercase and lemmatize the words using [BioLemmatizer 1.2](http://biolemmatizer.sourceforge.net/)).
 6. Train a word2vec model on the resulting text using [gensim](https://radimrehurek.com/gensim/models/word2vec.html) and hyperparameters from the paper, [How to Train Good Word Embeddings for Biomedical NLP (Chiu et al.)](https://aclweb.org/anthology/W/W16/W16-2922.pdf). Due to the relatively small training set, the model is trained with 60 iterations.
 
-Output: A saved gensim word2vec model `medline_SHUFFLED_biomedical_embeddings_200_lit_params_win2_60iters` in the [`wordEmbeddings`](wordEmbeddings/) directory.
+**Output**: A saved gensim word2vec model `medline_SHUFFLED_biomedical_embeddings_200_lit_params_win2_60iters` in the [`wordEmbeddings`](wordEmbeddings/) directory.
 
-#### Train Models
+### Train Models
 From the root directory, run [`main.py`](wordEmbeddings/main.py) with `train` flag to train and save the weights of the models:
 ```python
 python main.py train
@@ -78,7 +78,7 @@ python main.py train
 What that does is:
 1. 
 
-#### Visualize and Interpret Models
+### Visualize and Interpret Models
 The visualizations of the models' sentence and word weights assignment to the Stage 1 and Stage 2 test data are available here:
 https://wlouie1.github.io/MSKCCPersonalizedMedicineChallenge/visualization
 
