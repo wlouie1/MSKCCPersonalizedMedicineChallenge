@@ -87,6 +87,7 @@ What that does is:
    * The above network architecture is used to build the Raw Labels Model, the Condensed Labels Model, and the Likelihood Labels Model.
    * The gene and variation text are first truncated as follows: keep only the first 200 sentences, and keep only the first 100 words of each sentences; any sentences and words less than desired are padded with zeros. The motivation for setting a maximum document size of 200 and maximum sentence length of 100 is based off of the distributions of document and sentence lengths:
    
+   ![alt text](visualization/resources/train_gene_num_sent_per_doc.png)
    
    
    * The resulting texts are embedded using our word2vec model (see [Train word2vec Model](#train-word2vec-model)); each word embedding dimeion is 200.
