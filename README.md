@@ -1,55 +1,48 @@
 # MSKCC Personalized Medicine Challenge Submission
 
-This is my solution to the [Personalized Medicine: Redefining Cancer Treatment](https://www.kaggle.com/c/msk-redefining-cancer-treatment) challenge on Kaggle. I have made some modifications to the original model that generated the final submission since the end of the competition.
-The code here would generate a model (trained on 80% of the Stage 1 training data) with the following scores:
+This is my approach to the [Personalized Medicine: Redefining Cancer Treatment](https://www.kaggle.com/c/msk-redefining-cancer-treatment) challenge on Kaggle. I have made some modifications to the original model that generated the final submission since the end of the competition.
+
+The competition only asks for predictions for 9 classes, but one can also think of them as a combination of 5 condensed classes and 3 likelihood classes:
+
+<center>
+Raw Classes (9) | Condensed Classes (5) | Likelihood Classes (3)
+------------ | ------------- | -------------
+Likely Loss-of-function | Loss-of-function | Likely
+Likely Gain-of-function | Gain-of-function | Likely
+Neutral | Neutral | Sure
+Loss-of-function | Loss-of-function | Sure
+Likely Neutral | Neutral | Likely
+Inconclusive | Inconclusive | Inconclusive
+Gain-of-function | Gain-of-function | Sure
+Likely Switch-of-function | Switch-of-function | Likely
+Switch-of-function | Switch-of-function | Sure
+</center>
+
+The code here generates 3 models with the same arhitecture, each trained (on 80% of the Stage 1 training data) separately to predict the Raw, Condensed, and Likelihood classes, with the following results on the Stage 1 and Stage 2 test data (possibly unreliable, see [this](https://www.kaggle.com/c/msk-redefining-cancer-treatment/discussion/40676) and [this](https://www.kaggle.com/c/msk-redefining-cancer-treatment/discussion/42129)):
+
 ###### Raw Labels Model (9 classes)
-* Validation data (20% of training data):
-	* Log Loss: 1.1017
-* Stage 1 test data:
-	* Log Loss: 1.1013 (Accuracy: 61.1%)
-* Stage 2 test data (possibly unreliable, see [this](https://www.kaggle.com/c/msk-redefining-cancer-treatment/discussion/40676) and [this](https://www.kaggle.com/c/msk-redefining-cancer-treatment/discussion/42129)):
-	* Log Loss: 3.609 (Accuracy: 13.6%)
+<center>
+| | Validation data (20% of train) | Stage 1 Test data | Stage 2 test data |
+| ------------ | ------------ | ------------- | ------------- |
+| Log Loss | 1.1017 | 1.1013 | 3.609 |
+| Accuracy | - | 61.1% | 13.6% |
+</center>
 
-The main model outputs predictions for the given training data's 9 classes, which are (these labels are not supposed to be known to us during the competition):
-
-1. Likely Loss-of-function
-2. Likely Gain-of-function
-3. Neutral
-4. Loss-of-function
-5. Likely Neutral
-6. Inconclusive
-7. Gain-of-function
-8. Likely Switch-of-function
-9. Switch-of-function
-
-Which can be condensed into:
-1. Loss-of-function
-2. Gain-of-function
-3. Neutral
-4. Inconclusive
-5. Switch-of-function
-
-And likelihood:
-1. Likely
-2. Sure
-3. Inconclusive
-
-The code also generates 2 other models, trained on the condensed class labels and likelihood labels:
 ###### Condensed Labels Model (5 classes)
-* Validation data (20% of training data):
-	* Log Loss: 0.5538
-* Stage 1 test data:
-	* Log Loss: 0.6201 (Accuracy: 76.1%)
-* Stage 2 test data:
-	* Log Loss: 2.9057 (Accuracy: 20%)
+<center>
+| | Validation data (20% of train) | Stage 1 Test data | Stage 2 test data |
+| ------------ | ------------ | ------------- | ------------- |
+| Log Loss | 0.5538 | 0.6201 | 2.9057 |
+| Accuracy | - | 76.1% | 20% |
+</center>
 
 ###### Likelihood Labels Model (3 classes)
-* Validation data (20% of training data):
-	* Log Loss: 0.6431
-* Stage 1 test data:
-	* Log Loss: 0.6999 (Accuracy: 66.9%)
-* Stage 2 test data:
-	* Log Loss: 1.0935 (Accuracy: 34.4%)
+<center>
+| | Validation data (20% of train) | Stage 1 Test data | Stage 2 test data |
+| ------------ | ------------ | ------------- | ------------- |
+| Log Loss | 0.6431 | 0.6999 | 1.0935 |
+| Accuracy | - | 66.9% | 34.4% |
+</center>
 
 The scores are not especially impressive (among other reasons, the model is trained on only 80% of the original training data, and hyperparameters are not tuned), but the approach is versatile and intrepretable. The solution also ONLY uses the provided text data in the training set, so there are a lot of potential improvements to be made in using the provided Gene/Variation data, and external data. Please see [here]() for more details on the approach, visualizations, and suggestions for further improvements.
 
