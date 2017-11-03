@@ -19,19 +19,19 @@ The competition only asks for predictions for 9 classes, but one can also think 
 The code here generates 3 models with the same arhitecture, each trained (on 80% of the Stage 1 training data) separately to predict the Raw, Condensed, and Likelihood classes, with the following results on the Stage 1 and Stage 2 test data (possibly unreliable, see [this](https://www.kaggle.com/c/msk-redefining-cancer-treatment/discussion/40676) and [this](https://www.kaggle.com/c/msk-redefining-cancer-treatment/discussion/42129)):
 
 ###### Raw Labels Model (9 classes)
-| | Validation data (20% of train) | Stage 1 Test data | Stage 2 test data |
+|#| Validation data (20% of train) | Stage 1 Test data | Stage 2 test data |
 | ------------ | ------------ | ------------- | ------------- |
 | Log Loss | 1.1017 | 1.1013 | 3.609 |
 | Accuracy | - | 61.1% | 13.6% |
 
 ###### Condensed Labels Model (5 classes)
-| | Validation data (20% of train) | Stage 1 Test data | Stage 2 test data |
+|#| Validation data (20% of train) | Stage 1 Test data | Stage 2 test data |
 | ------------ | ------------ | ------------- | ------------- |
 | Log Loss | 0.5538 | 0.6201 | 2.9057 |
 | Accuracy | - | 76.1% | 20% |
 
 ###### Likelihood Labels Model (3 classes)
-| | Validation data (20% of train) | Stage 1 Test data | Stage 2 test data |
+|#| Validation data (20% of train) | Stage 1 Test data | Stage 2 test data |
 | ------------ | ------------ | ------------- | ------------- |
 | Log Loss | 0.6431 | 0.6999 | 1.0935 |
 | Accuracy | - | 66.9% | 34.4% |
