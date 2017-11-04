@@ -234,18 +234,44 @@ function viewModel(stage1Results, stage2Results)
     var self = this;
     self.stage1Results = stage1Results;
     self.stage2Results = stage2Results;
-    self.results = stage1Results;
+    self.currentStageResults = self.stage1Results;
+    self.modelsInd = 1;
+    self.results = self.currentStageResults[self.modelsInd];
     self.tdv = new TextDocumentVisualizer();
     self.state = 'filter';
 
     $('#stage1label').click(function(event) {
-        self.results = self.stage1Results;
+        self.currentStageResults = self.stage1Results
+        self.results = self.currentStageResults[self.modelsInd];
         self.main();
     });
 
     $('#stage2label').click(function(event) {
-        self.results = self.stage2Results;
+        self.currentStageResults = self.stage2Results
+        self.results = self.currentStageResults[self.modelsInd];
         self.main();
+    });
+
+    $('#rawLabel').click(function(event) {
+        self.modelsInd = 1;
+        self.results = self.currentStageResults[self.modelsInd];
+        
+        var select = document.getElementById('instanceSelect');
+        self.textDocuments = self.results.map(function(result) {
+            return result[select.selectedIndex];
+        });
+        self.update();
+    });
+
+    $('#condensedLkelihoodLabel').click(function(event) {
+        self.modelsInd = 0;
+        self.results = self.currentStageResults[self.modelsInd];
+        
+        var select = document.getElementById('instanceSelect');
+        self.textDocuments = self.results.map(function(result) {
+            return result[select.selectedIndex];
+        });
+        self.update();
     });
 
     self.populateSelect = function(select)
@@ -437,7 +463,7 @@ $(function() {
         }
 
         $('#content').empty();
-        vm = new viewModel([condensedModelMetaData, likelihoodModelMetaData, rawModelMetaData], [condensedModelMetaData2, likelihoodModelMetaData2, rawModelMetaData2]);
+        vm = new viewModel([[condensedModelMetaData, likelihoodModelMetaData], [rawModelMetaData]], [[condensedModelMetaData2, likelihoodModelMetaData2], [rawModelMetaData2]]);
         vm.main();
     });
 })

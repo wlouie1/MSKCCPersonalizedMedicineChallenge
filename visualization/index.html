@@ -21,6 +21,15 @@
         </ul>
         <form class="form-inline mt-2 mt-md-0">
           <div class="btn-group" data-toggle="buttons">
+            <label id='rawLabel' class="btn btn-outline-secondary active">
+              <input type="radio" name="options" id="raw" autocomplete="off" checked> Raw Model
+            </label>
+            <label id='condensedLkelihoodLabel' class="btn btn-outline-secondary">
+              <input type="radio" name="options" id="condensedLkelihood" autocomplete="off"> Condensed + Likelihood Models
+            </label>
+          </div>
+          <div class="v-divider">&nbsp</div>
+          <div class="btn-group" data-toggle="buttons">
             <label id='stage1label' class="btn btn-outline-secondary active">
               <input type="radio" name="options" id="stage1" autocomplete="off" checked> Stage 1 Test Data
             </label>
