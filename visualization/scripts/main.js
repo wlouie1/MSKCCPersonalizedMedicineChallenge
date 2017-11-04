@@ -162,7 +162,7 @@ function TextDocumentVisualizer()
         var loglossDiv = document.createElement("div");
         $(loglossDiv).html('<span class="scoreLabel">Model Log Loss: </span>' + self._round(log_loss, 3));
         var accuracyDiv = document.createElement("div");
-        $(accuracyDiv).html('<span class="scoreLabel">Model Accuracy: </span>' + self._round(accuracy, 3));
+        $(accuracyDiv).html('<span class="scoreLabel">Model Accuracy: </span>' + self._round(accuracy, 3) * 100 + '%');
 
         modelScoreDiv.appendChild(loglossDiv);
         modelScoreDiv.appendChild(accuracyDiv);
