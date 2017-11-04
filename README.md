@@ -70,9 +70,11 @@ What that does is:
 
 **Output**: A saved gensim word2vec model `medline_SHUFFLED_biomedical_embeddings_200_lit_params_win2_60iters` in the [`wordEmbeddings`](wordEmbeddings/) directory.
 
-Here's a visualization of the word vectors, produced by running t-SNE on the top 1000 most common words, and plotting the top 250 most common words:
+For sanity check, a visualization of the word vectors was produced, by running t-SNE on the top 1000 most common words, and plotting the top 250 most common words:
 
 ![alt text](visualization/resources/word2vec_tsne.png)
+
+We see that the vectors look decent, e.g. the vectors for {'breast', 'cancer', 'tumor', 'carcinoma'} are close together, vectors for {'domain', 'site', 'sequence'} are close together, etc.
 
 ### Train Models
 From the root directory, run [`main.py`](wordEmbeddings/main.py) with `train` flag to train and save the weights of the models:
