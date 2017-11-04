@@ -229,15 +229,28 @@ function TextDocumentVisualizer()
     }
 }
 
-function viewModel(results)
+function viewModel(stage1Results, stage2Results)
 {
     var self = this;
-    self.results = results;
+    self.stage1Results = stage1Results;
+    self.stage2Results = stage2Results;
+    self.results = stage1Results;
     self.tdv = new TextDocumentVisualizer();
     self.state = 'filter';
 
+    $('#stage1label').click(function(event) {
+        self.results = self.stage1Results;
+        self.main();
+    });
+
+    $('#stage2label').click(function(event) {
+        self.results = self.stage2Results;
+        self.main();
+    });
+
     self.populateSelect = function(select)
     {
+        $(select).empty();
         self.results[0].forEach(function(textDocument) {
             var option = document.createElement('option');
             $(option).html(textDocument['ID']);
@@ -282,7 +295,6 @@ function viewModel(results)
             self.textDocuments = self.results.map(function(result) {
                 return result[select.selectedIndex];
             });
-            // self.textDocument = self.results[select.selectedIndex];
             self.update();
         });
 
@@ -304,49 +316,21 @@ function viewModel(results)
 }
 
 $(function() {
-    // $.getJSON("results/rawModel_ResultsStage1.json", function(data) {
-    //     vm = new viewModel([data]);
-    //     vm.main();
-    // });
+    var loadingJumbotron = document.createElement('div');
+    var loadingH1 = document.createElement('h1');
+    $(loadingJumbotron).addClass('jumbotron');
+    $(loadingH1).addClass('display-3');
+    $(loadingH1).html('Loading...');
+    loadingJumbotron.appendChild(loadingH1);
+    document.getElementById('content').appendChild(loadingJumbotron);
 
-    // var condensedModelData, likelihoodModelData;
-    // $.when(
-    //     $.getJSON("results/condensedModel_ResultsStage1.json", function(data) {
-    //         condensedModelData = data;
-    //     }),
-    //     $.getJSON("results/likelihoodModel_ResultsStage1.json", function(data) {
-    //         likelihoodModelData = data;
-    //     })
-    // ).then(function() {
-    //     if (condensedModelData && likelihoodModelData)
-    //     {
-    //         vm = new viewModel([condensedModelData, likelihoodModelData]);
-    //         vm.main();
-    //     }
-    // });
-    // var condensedModelData, likelihoodModelData, rawModelData;
-    // $.when(
-    //     $.getJSON("results/rawModel_ResultsStage1.json", function(data) {
-    //         rawModelData = data;
-    //     }),
-    //     $.getJSON("results/condensedModel_ResultsStage1.json", function(data) {
-    //         condensedModelData = data;
-    //     }),
-    //     $.getJSON("results/likelihoodModel_ResultsStage1.json", function(data) {
-    //         likelihoodModelData = data;
-    //     })
-    // ).then(function() {
-    //     if (condensedModelData && likelihoodModelData)
-    //     {
-    //         vm = new viewModel([condensedModelData, likelihoodModelData, rawModelData]);
-    //         vm.main();
-    //     }
-    // });
-
-    // var condensedModelData, likelihoodModelData, rawModelData;
     var rawModelMetaData, rawModelGeneText, rawModelVarText;
     var condensedModelMetaData, condensedModelGeneText, condensedModelVarText;
     var likelihoodModelMetaData, likelihoodModelGeneText, likelihoodModelVarText;
+
+    var rawModelMetaData2, rawModelGeneText2, rawModelVarText2;
+    var condensedModelMetaData2, condensedModelGeneText2, condensedModelVarText2;
+    var likelihoodModelMetaData2, likelihoodModelGeneText2, likelihoodModelVarText2;
     $.when(
         $.getJSON("results/rawModel_ResultsStage1_metaData.json", function(data) {
             rawModelMetaData = data;
@@ -374,6 +358,33 @@ $(function() {
         }),
         $.getJSON("results/likelihoodModel_ResultsStage1_varText.json", function(data) {
             likelihoodModelVarText = data;
+        }),
+        $.getJSON("results/rawModel_ResultsStage2_metaData.json", function(data) {
+            rawModelMetaData2 = data;
+        }),
+        $.getJSON("results/rawModel_ResultsStage2_geneText.json", function(data) {
+            rawModelGeneText2 = data;
+        }),
+        $.getJSON("results/rawModel_ResultsStage2_varText.json", function(data) {
+            rawModelVarText2 = data;
+        }),
+        $.getJSON("results/condensedModel_ResultsStage2_metaData.json", function(data) {
+            condensedModelMetaData2 = data;
+        }),
+        $.getJSON("results/condensedModel_ResultsStage2_geneText.json", function(data) {
+            condensedModelGeneText2 = data;
+        }),
+        $.getJSON("results/condensedModel_ResultsStage2_varText.json", function(data) {
+            condensedModelVarText2 = data;
+        }),
+        $.getJSON("results/likelihoodModel_ResultsStage2_metaData.json", function(data) {
+            likelihoodModelMetaData2 = data;
+        }),
+        $.getJSON("results/likelihoodModel_ResultsStage2_geneText.json", function(data) {
+            likelihoodModelGeneText2 = data;
+        }),
+        $.getJSON("results/likelihoodModel_ResultsStage2_varText.json", function(data) {
+            likelihoodModelVarText2 = data;
         })
     ).then(function() {
         if (rawModelMetaData && rawModelGeneText && rawModelVarText)
@@ -400,17 +411,33 @@ $(function() {
                 likelihoodModelMetaData[i]['variationText'] = likelihoodModelVarText[i];
             }
         }
+        if (rawModelMetaData2 && rawModelGeneText2 && rawModelVarText2)
+        {
+            for (var i = 0; i < rawModelMetaData2.length; i++)
+            {
+                rawModelMetaData2[i]['geneText'] = rawModelGeneText2[i];
+                rawModelMetaData2[i]['variationText'] = rawModelVarText2[i];
+            }
+        }
+        if (condensedModelMetaData2, condensedModelGeneText2, condensedModelVarText2)
+        {
+            for (var i = 0; i < condensedModelMetaData2.length; i++)
+            {
+                condensedModelMetaData2[i]['geneText'] = condensedModelGeneText2[i];
+                condensedModelMetaData2[i]['variationText'] = condensedModelVarText2[i];
+            }
+        }
+        if (likelihoodModelMetaData2, likelihoodModelGeneText2, likelihoodModelVarText2)
+        {
+            for (var i = 0; i < likelihoodModelMetaData2.length; i++)
+            {
+                likelihoodModelMetaData2[i]['geneText'] = likelihoodModelGeneText2[i];
+                likelihoodModelMetaData2[i]['variationText'] = likelihoodModelVarText2[i];
+            }
+        }
 
-        vm = new viewModel([condensedModelMetaData, likelihoodModelMetaData, rawModelMetaData]);
+        $('#content').empty();
+        vm = new viewModel([condensedModelMetaData, likelihoodModelMetaData, rawModelMetaData], [condensedModelMetaData2, likelihoodModelMetaData2, rawModelMetaData2]);
         vm.main();
     });
-
-
-    // $.getJSON("results/modelsResultsStage2.json", function(data) {
-    //     vm = new viewModel([data['condensedModelResults'], data['likelihoodModelResults']]);
-    //     // vm = new viewModel([data['rawModelResults']]);
-    //     vm.main();
-    // }).fail(function( jqXHR, textStatus, errorThrown) {
-    //     console.log( errorThrown );
-    // });
 })
