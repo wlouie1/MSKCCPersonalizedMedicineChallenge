@@ -65,12 +65,16 @@ What that does is:
 2. From the list of PMIDs, figure out which journals they are from, e.g. Nature Cell Biology, Cell Cycle, etc. Gathering this list of journal names is the only extent at which OncoKB is used in this solution.
 3. Go through all the MEDLINE articles in [`MEDLINE`](wordEmbeddings/PubmedOA_MEDLINE_XML/MEDLINE), and pick the ones that are published in those journals. The idea is that only articles that are most related to cancer are retained.
 4. Extract abstract texts from the filtered MEDLINE articles.
-5. Preprocess the text (tokenize into sentences, tokenize each sentence into words, lowercase and lemmatize the words using [BioLemmatizer 1.2](http://biolemmatizer.sourceforge.net/)).
+5. Preprocess the text:
+   * Tokenize into sentences using NLTK's PunktSentenceTokenizer.
+   * Tokenize each sentence into words using NLTK's TreebankWordTokenizer.
+   * Lowercase every word, as an attempt to reduce vocabulary (e.g. 'protein', 'Protein', and 'PROTEIN' will all be lumped as 'protein') since the amount of corpus data is relatively small.
+   * Lemmatize the words using [BioLemmatizer 1.2](http://biolemmatizer.sourceforge.net/)), also as an attempt to reduce vocabulary (e.g. 'protein' and 'proteins' both lumped as 'protein').
 6. Train a word2vec model on the resulting text using [gensim](https://radimrehurek.com/gensim/models/word2vec.html) and hyperparameters from the paper, [How to Train Good Word Embeddings for Biomedical NLP (Chiu et al.)](https://aclweb.org/anthology/W/W16/W16-2922.pdf). Due to the relatively small training set, the model is trained with 60 iterations.
 
 **Output**: A saved gensim word2vec model `medline_SHUFFLED_biomedical_embeddings_200_lit_params_win2_60iters` in the [`wordEmbeddings`](wordEmbeddings/) directory.
 
-For sanity check, a visualization of the word vectors was produced, by running t-SNE on the top 1000 most common words, and plotting the top 250 most common words:
+For sanity check, a visualization of the word vectors was produced, by running t-SNE on the top 1000 most common words, and plotting the top 250 most common words (see [`tsne.py`](wordEmbeddings/tsne.py)):
 
 ![alt text](visualization/resources/word2vec_tsne.png)
 
@@ -104,7 +108,7 @@ Train Variation Text:
 
 ![alt text](visualization/resources/train_var_num_sent_per_doc.png) ![alt text](visualization/resources/train_var_num_words_per_sent.png)
    
-   * The resulting texts are embedded using our word2vec model (see [Train word2vec Model](#train-word2vec-model)); each word embedding dimeion is 200.
+   * The resulting texts are embedded using our word2vec model (see [Train word2vec Model](#train-word2vec-model)); each word embedding dimension is 200.
    * The GRU dimension is set to be 50 in the Raw Labels Model, and 25 in the Condensed and Likelihood Models. These values are chosen somewhat arbitrarily--they're values at which my laptop can handle in a reasonable time.
    * For training, a mini-batch size of 32 is used, and the Raw Labels Model, Condensed Labels Mode, and Likelihood Models are trained for 5, 6, and 6 epochs respectively (epochs that reached lowest score on the 20% validation set).
  4. The weights of the resulting models are saved in `"raw_MEDLINE60iterw2v_GRU50" + ".{epoch:02d}-{loss:.4f}-{val_loss:.4f}-{test_loss:.4f}-{test2_loss:.4f}.hdf5"`, `"condensed_class_MEDLINE60_GRU25" + ".{epoch:02d}-{loss:.4f}-{val_loss:.4f}-{test_loss:.4f}-{test2_loss:.4f}.hdf5"`, and `"likelihood_MEDLINE60_GRU25" + ".{epoch:02d}-{loss:.4f}-{val_loss:.4f}-{test_loss:.4f}-{test2_loss:.4f}.hdf5"`. `test_loss` and `test2_loss` are the Stage 1 and Stage 2 test data log loss values respectively, so if I set the numpy and random seeds properly in my code, you should yield the following files: `raw_MEDLINE60iterw2v_GRU50.04-0.7716-1.1017-1.1013-3.6090.hdf5`, `condensed_class_MEDLINE60_GRU25.06-0.3916-0.5538-0.6201-2.9057.hdf5`, and `likelihood_MEDLINE60_GRU25.05-0.5529-0.6431-0.6999-1.0935.hdf5`. If your values are slightly different, remember to change the weights file names accordinging in [`main.py`](wordEmbeddings/main.py) before you build the visualizations (see [Visualize and Interpret Models](#visualize-and-interpret-models)).
