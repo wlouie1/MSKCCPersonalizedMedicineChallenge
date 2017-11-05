@@ -145,7 +145,8 @@ And then open up http://localhost:8000/ in a browser. Again, the page may take a
 Python 2.7.13
 * requests==2.12.4
 * pandas==0.19.2
-* matplotlib==2.0.0
+* matplotlib==2.0.0 (optional, for plotting)
+* ggplot==0.11.5 (optional, for plotting)
 * Keras==2.0.6 (Theano 0.9.0 backend used)
 * nltk==3.2.2
 * gensim==2.3.0
