@@ -39,7 +39,7 @@ The code here generates 3 models with the same arhitecture, each trained separat
 | **Log Loss** | 0.6431 | 0.6999 | 1.0935 |
 | **Accuracy** | - | 66.9% | 34.4% |
 
-The scores are not especially impressive (among other reasons, the model is trained on only 80% of the original training data, and hyperparameters are not tuned), but the approach is versatile and intrepretable. The solution also ONLY uses the provided text data in the training set, so there are a lot of potential improvements to be made by using external data. Please see [Usage and Approach](#usage-and-approach) for more details on the approach and visualizations.
+The scores are not especially impressive (among other reasons, the model is trained on only 80% of the original training data, and hyperparameters are not tuned), but the approach is versatile and intrepretable. The solution also ONLY uses the provided text data in the training set, so there are a lot of potential improvements to be made by using external data. Please see [Usage and Approach](#usage-and-approach) for more details on the approach, visualizations, and suggestions for improvements.
 
 ## Usage and Approach
 
@@ -167,6 +167,17 @@ This will generate JSON files containing sentence and word weights information i
 python -m SimpleHTTPServer
 ```
 And then open up http://localhost:8000/ in a browser. Again, the page may take a couple of minutes to fully load.
+
+#### Potential Improvements
+Due to the limited time and computational resources at my disposal, there are various potential improvements I have not tried:
+   * Replace the gene names and variation names in the sentence with special tokens. Based on the visualization, the network seems to be using gene and variation identity heavily for its predictions (e.g. the token "TET2" is weighted heavily), which is not ideal for predicting texts of unseen genes and variations. Perhaps by normalizing mentions of the gene and variation in the training data, the network will focus more on the surrounding text.
+   * Use better methods of determining whether a given sentence is "relevant", and optimize how many sentences above and below the "relevant" sentence should be retained. Afterall, garbage in, garbage out.
+   * Train better word vectors (it is important to start with high quality word vectors because the embedding layer weights in our models are frozen to prevent overfitting during training):
+      * In addition to curating MEDLINE abstracts by journal names, also curate them by MeSH terms. Do the same for PubMed OA articles to yield a larger corpus for training. 
+      * Explore alternatives to word2vec skip gram model, such as word2vec CBOW, GloVe, or fastText.
+   * Train on 100% of the training data instead of 80%.
+   * Fine tune the model hyperparameters, e.g. number of GRU units, maximum document and sentence lengths, batch sizes, etc. for each of the gene and variation text Hierarchical Attention Networks. The values used above were chosen arbitrarily based on what my laptop can handle, and the same values were used for both the gene and variation Hierarchical Attention Networks for simplicity, even though they should ideally be fine tuned separately.
+   * Use external data.
 
 ## Dependencies
 Python 2.7.13
