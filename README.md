@@ -16,7 +16,7 @@ The competition only asks for predictions for 9 classes, but one can also think 
 | Likely Switch-of-function | Switch-of-function | Likely |
 | Switch-of-function | Switch-of-function | Sure |
 
-The code here generates 3 models with the same arhitecture, each trained (on 80% of the Stage 1 training data) separately to predict the Raw, Condensed, and Likelihood classes, with the following results on the Stage 1 and Stage 2 test data (possibly unreliable, see [this](https://www.kaggle.com/c/msk-redefining-cancer-treatment/discussion/40676) and [this](https://www.kaggle.com/c/msk-redefining-cancer-treatment/discussion/42129)):
+The code here generates 3 models with the same arhitecture, each trained separately (on 80% of the Stage 1 training data) to predict the Raw, Condensed, and Likelihood classes, with the following results on the Stage 1 and Stage 2 test data (possibly unreliable, see [this](https://www.kaggle.com/c/msk-redefining-cancer-treatment/discussion/40676) and [this](https://www.kaggle.com/c/msk-redefining-cancer-treatment/discussion/42129)):
 
 ###### Raw Labels Model (9 classes)
 
@@ -39,7 +39,7 @@ The code here generates 3 models with the same arhitecture, each trained (on 80%
 | **Log Loss** | 0.6431 | 0.6999 | 1.0935 |
 | **Accuracy** | - | 66.9% | 34.4% |
 
-The scores are not especially impressive (among other reasons, the model is trained on only 80% of the original training data, and hyperparameters are not tuned), but the approach is versatile and intrepretable. The solution also ONLY uses the provided text data in the training set, so there are a lot of potential improvements to be made in using external data. Please see [Usage and Approach](#usage-and-approach) for more details on the approach and visualizations.
+The scores are not especially impressive (among other reasons, the model is trained on only 80% of the original training data, and hyperparameters are not tuned), but the approach is versatile and intrepretable. The solution also ONLY uses the provided text data in the training set, so there are a lot of potential improvements to be made by using external data. Please see [Usage and Approach](#usage-and-approach) for more details on the approach and visualizations.
 
 ## Usage and Approach
 
@@ -56,7 +56,7 @@ test_variants
 training_text
 training_variants
 ```
-This solution uses custom trained word2vec vectors. To produce them, populate the [`MEDLINE`](wordEmbeddings/PubmedOA_MEDLINE_XML/MEDLINE) directory with [MEDLINE](https://www.nlm.nih.gov/bsd/licensee/) articles. See [`README`](wordEmbeddings/PubmedOA_MEDLINE_XML/README) for more detailed instructions (for this particular solution, MEDLINE articles available on 8/28/17 were downloaded and used). Note that the word vectors used in this solution are trained on only MEDLINE abstracts; populate the [`PubmedOA`](wordEmbeddings/PubmedOA_MEDLINE_XML/PubmedOA) directory (also see the [`README`](wordEmbeddings/PubmedOA_MEDLINE_XML/README)) and uncomment some lines in [`evidence_filter.py`](wordEmbeddings/evidence_filter.py) if you also want to include articles from the [PubMed Open-Access (OA) subset](http://www.ncbi.nlm.nih.gov/pmc/tools/ftp/).
+This solution uses custom trained word2vec vectors. To produce them, populate the [`MEDLINE`](wordEmbeddings/PubmedOA_MEDLINE_XML/MEDLINE) directory with [MEDLINE](https://www.nlm.nih.gov/databases/download/pubmed_medline.html) articles. See [`README`](wordEmbeddings/PubmedOA_MEDLINE_XML/README) for more detailed instructions (for this particular solution, MEDLINE articles available on 8/28/17 were downloaded and used). Note that the word vectors used in this solution are trained on only MEDLINE abstracts; populate the [`PubmedOA`](wordEmbeddings/PubmedOA_MEDLINE_XML/PubmedOA) directory (also see the [`README`](wordEmbeddings/PubmedOA_MEDLINE_XML/README)) and uncomment some lines in [`evidence_filter.py`](wordEmbeddings/evidence_filter.py) if you also want to include articles from the [PubMed Open-Access (OA) subset](http://www.ncbi.nlm.nih.gov/pmc/tools/ftp/).
 
 ### Train word2vec Model
 From the [`wordEmbeddings`](wordEmbeddings/) directory, run [`evidence_filter.py`](wordEmbeddings/evidence_filter.py)
@@ -74,7 +74,7 @@ What that does is:
    * Tokenize into sentences using NLTK's PunktSentenceTokenizer.
    * Tokenize each sentence into words using NLTK's TreebankWordTokenizer.
    * Lowercase every word, as an attempt to reduce vocabulary (e.g. 'protein', 'Protein', and 'PROTEIN' will all be lumped as 'protein') since the amount of corpus data is relatively small.
-   * Lemmatize the words using [BioLemmatizer 1.2](http://biolemmatizer.sourceforge.net/), also as an attempt to reduce vocabulary (e.g. 'protein' and 'proteins' both lumped as 'protein').
+   * Lemmatize the words using [BioLemmatizer 1.2](http://biolemmatizer.sourceforge.net/), also as an attempt to reduce vocabulary (e.g. 'protein' and 'proteins' are both lumped as 'protein').
 6. Train a word2vec model on the resulting text using [gensim](https://radimrehurek.com/gensim/models/word2vec.html) and hyperparameters from the paper, [How to Train Good Word Embeddings for Biomedical NLP (Chiu et al.)](https://aclweb.org/anthology/W/W16/W16-2922.pdf). Due to the relatively small training set, the model is trained with 60 iterations.
 
 **Output**: A saved gensim word2vec model `medline_SHUFFLED_biomedical_embeddings_200_lit_params_win2_60iters` in the [`wordEmbeddings`](wordEmbeddings/) directory.
@@ -83,7 +83,7 @@ For sanity check, a visualization of the word vectors was produced, by running t
 
 ![alt text](visualization/resources/word2vec_tsne.png)
 
-We see that the vectors look decent, e.g. the vectors for {'breast', 'cancer', 'tumor', 'carcinoma'} are close together, vectors for {'domain', 'site', 'sequence'} are close together, etc.
+We see that the vectors look decent, e.g. the vectors for {'breast', 'cancer', 'tumor', 'carcinoma'} are close together, vectors for {'domain', 'site', 'sequence', 'region'} are close together, etc.
 
 ### Train Models
 From the root directory, run [`main.py`](wordEmbeddings/main.py) with `train` flag to train and save the weights of the models:
