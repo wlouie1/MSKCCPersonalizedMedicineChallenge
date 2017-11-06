@@ -168,7 +168,7 @@ python -m SimpleHTTPServer
 ```
 And then open up http://localhost:8000/ in a browser. Again, the page may take a couple of minutes to fully load.
 
-#### Potential Improvements
+## Potential Improvements
 Due to the limited time and computational resources at my disposal, there are various potential improvements I have not tried:
    * Replace the gene names and variation names in the sentence with special tokens. Based on the visualization, the network seems to be using gene and variation identity heavily for its predictions (e.g. the token "TET2" is weighted heavily, above all else), which is not ideal for predicting texts of unseen genes and variations (evident in the poor results on Stage 2 test data). Perhaps by normalizing mentions of the gene and variation in the training data, the network will focus more on the surrounding text.
    * Use better methods of determining whether a given sentence is "relevant", and optimize how many sentences above and below the "relevant" sentence should be retained. Afterall, garbage in, garbage out.
