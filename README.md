@@ -118,7 +118,7 @@ The resulting distributions of document lengths (number of sentences) and senten
 
 ![alt text](visualization/resources/train_var_num_sent_per_doc.png) ![alt text](visualization/resources/train_var_num_words_per_sent.png)
 
-Our models (see [Build Models](3.-build-models) for more details) require fixed document length and fixed sentence length inputs. Judging from the distributions above, it seems reasonable to set a maximum document size of 200 and maximum sentence length of 100. Specifically, the first 200 sentences and the first 100 words of each sentence are kept for each text; any sentences and words less than desired are padded with zeros, and any sentences and words greater than the cap are truncated. 
+Our models (see [Build Models](3-build-models) for more details) require fixed document length and fixed sentence length inputs. Judging from the distributions above, it seems reasonable to set a maximum document size of 200 and maximum sentence length of 100. Specifically, the first 200 sentences and the first 100 words of each sentence are kept for each text; any sentences and words less than desired are padded with zeros, and any sentences and words greater than the cap are truncated. 
 
 #### 3. Build Models
 The 3 models (Raw Labels, Condensed Labels, Likelihood Labels) all have essentially the same architecture, the only difference being the last softmax layer outputs either 9, 5, or 3 classes:
