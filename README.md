@@ -39,7 +39,7 @@ The code here generates 3 models with the same arhitecture, each trained separat
 | **Log Loss** | 0.6431 | 0.6999 | 1.0935 |
 | **Accuracy** | - | 66.9% | 34.4% |
 
-The scores are not especially impressive (among other reasons, the model is trained on only 80% of the original training data, and hyperparameters are not tuned), but the approach is versatile and intrepretable. The solution also ONLY uses the provided text data in the training set, so there are a lot of potential improvements to be made by using external data. Please see the sections below for more details on the approach, visualizations, and suggestions for improvements.
+The scores are not especially impressive (among other reasons, the model is trained on only 80% of the original training data, and hyperparameters are not tuned), but the approach is versatile and intrepretable. The solution also ONLY uses the provided text data in the training set, so there are a lot of potential improvements to be made by using external data. Please see the sections below for more details on the [approach](#usage-and-approach), [visualizations](#visualize-and-interpret-models), and [suggestions for improvements](#potential-improvements).
 
 ## Usage and Approach
 
