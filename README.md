@@ -126,10 +126,15 @@ Note that the page may take a couple of minutes to fully load, so **be patient**
 
 ![alt text](visualization/resources/visualization_screenshot.png)
 
-On the navigation bar on the top, there is a drop down at the top right that allows you to select the `ID` of the test data instance. The corresponding Gene/Variation information is on the top left. There are also two modes you can toggle: `Filtered and Sorted` (default) and `Full Text View`. Shown in the main body of the page are the models results. In the `Filtered and Sorted` mode of the page, the sentences are ranked highest attention weight to lowest attention weight (what the model attributes as most important to least important), with the opacity of the red color corresponding to the weight values. In each sentence, words are highlighted in blue, and the opacity of the blue corresponds to their attention weight values (normalized by its sentence weight)--the darker the blue highlight, the more "significant" the word is to the model. The `Full Text View` shows the original given text, not just the text subset used to train the models. 
+#### Navigation Bar
+On the navigation bar on the top, there is a drop down at the top right that allows you to select the `ID` of the test data instance. The corresponding Gene/Variation information is on the top left. You can select prediction results for `Stage 1` or `Stage 2` test data, and the models that generated--`Raw Model` or `Condensed + Likelihood Models`. There are also two modes you can toggle: `Filtered and Sorted` (default) and `Full Text View`, which shows just the sentences the models considered for the prediction, or the entirety of the provided text respectively. 
+
+#### Main Body
+Shown in the main body of the page are the models results. In the `Filtered and Sorted` mode of the page, the sentences are ranked highest attention weight to lowest attention weight (what the model attributes as most important to least important), with the opacity of the red color corresponding to the weight values. In each sentence, words are highlighted in blue, and the opacity of the blue corresponds to their attention weight values (normalized by its sentence weight)--the darker the blue highlight, the more "significant" the word is to the model. The `Full Text View` shows the original given text, not just the text subset used to train the models. 
 
 In the screenshot example above, `ID` 651 of the Stage 1 Test data is selected (DIS3/R780K), and the models correctly predict it to be Loss-of-function. The Raw Labels model and the Condensed Labels model both attribute phrases such as `mutations markedly reduced hdis3 exoribonucleolytic activity` and `catalytic rnb mutant` as important in classifying the gene variation as Loss-of-function. Not all of them assign important sentences and words that make sense, but you can see that many of them seem to be in the general right direction if you click around and explore other result instances in the test data.
 
+#### Building the Visualizations Locally
 To build the visualizations locally, run [`main.py`](wordEmbeddings/main.py) with `visualize` flag:
 
 ```python
