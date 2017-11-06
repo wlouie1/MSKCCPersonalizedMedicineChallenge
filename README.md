@@ -98,7 +98,7 @@ What that does is:
 Load the Stage 1 Training data, Stage 1 Test data, and Stage 2 Test data; the machine generated instances of the test data are filtered out. Stratified sampling is done (to ensure that relative class frequencies is approximately preserved) to obtain 20% of the Stage 1 training data to be used as a validation set. The remaining 80% is used for training.
 
 #### 2. Preprocess Text
-For each text data instance, preprocess the same way as how we preprocessed the corpus used to train our word vectors (see [Train word2vec Model](train-word2vec-model)):
+For each text data instance, preprocess the same way as how we preprocessed the corpus used to train our word vectors (see [Train word2vec Model](#train-word2vec-model)):
    * Normalize any non-ascii unicode characters to ascii characters.
    * Lowercase all characters.
    * Tokenize into sentences using NLTK's PunktSentenceTokenizer.
@@ -118,7 +118,7 @@ The resulting distributions of document lengths (number of sentences) and senten
 
 ![alt text](visualization/resources/train_var_num_sent_per_doc.png) ![alt text](visualization/resources/train_var_num_words_per_sent.png)
 
-Our models (see [Build Models](3-build-models) for more details) require fixed document length and fixed sentence length inputs. Judging from the distributions above, it seems reasonable to set a maximum document size of 200 and maximum sentence length of 100. Specifically, the first 200 sentences and the first 100 words of each sentence are kept for each text; any sentences and words less than desired are padded with zeros, and any sentences and words greater than the cap are truncated. 
+Our models (see [Build Models](#3-build-models) for more details) require fixed document length and fixed sentence length inputs. Judging from the distributions above, it seems reasonable to set a maximum document size of 200 and maximum sentence length of 100. Specifically, the first 200 sentences and the first 100 words of each sentence are kept for each text; any sentences and words less than desired are padded with zeros, and any sentences and words greater than the cap are truncated. 
 
 #### 3. Build Models
 The 3 models (Raw Labels, Condensed Labels, Likelihood Labels) all have essentially the same architecture, the only difference being the last softmax layer outputs either 9, 5, or 3 classes:
