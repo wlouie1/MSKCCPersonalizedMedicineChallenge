@@ -91,9 +91,18 @@ From the root directory, run [`main.py`](wordEmbeddings/main.py) with `train` fl
 python main.py train
 ```
 What that does is:
-1. Load the Stage 1 Training data, Stage 1 Test data, and Stage 2 Test data; the machine generated instances of the test data are filtered out.
+
+#### 1. Load Data
+Load the Stage 1 Training data, Stage 1 Test data, and Stage 2 Test data; the machine generated instances of the test data are filtered out.
+
+#### 2. Preprocess Text
 2. Preprocess the data:
    1. 
+
+#### Build Models
+
+
+#### Train Models
 3. Build and train models. The 3 models (Raw Labels, Condensed Labels, Likelihood Labels) all have essentially the same architecture, the only difference being the last softmax layer outputs either 9, 5, or 3 classes:
    * The model artchitecture is derived from the paper, [Hierarchical Attention Networks for Document Classification (Yang et al.)](https://www.cs.cmu.edu/~diyiy/docs/naacl16.pdf).
    * Figure 2 of that paper shows a Hierarchical Attention Network, featuring a word sequence encoder, a word-level attention layer, a sentence encoder, and a sentence-level attention layer. Refer to the paper for more details, but the general idea is that given a document with sentences and words, the sentences and words are each encoded using bidirection GRUs, and two levels of attention mechanisms are applied at the word and sentence-level to enable the network to attend to important content when constructing the document representation. The resulting document representation is then fed to a softmax layer for classification. A property of this network architecture is that the learned word and sentence level attention weights can be used to visualize and interpret the model.
@@ -142,7 +151,7 @@ To build the visualizations locally, run [`main.py`](wordEmbeddings/main.py) wit
 ```python
 python main.py visualize
 ```
-This will generate JSON files in the [`results`](visualization/results/) directory. Host the outer [`visualization`](visualization/) directory to view the results in a browser. For example, to host and view in a browser locally using python, run the following from the [`visualization`](visualization/) directory:
+This will generate JSON files containing sentence and word weights information in the [`results`](visualization/results/) directory. Host the outer [`visualization`](visualization/) directory to view the results in a browser. For example, to host and view in a browser locally using python, run the following from the [`visualization`](visualization/) directory:
 ```python
 python -m SimpleHTTPServer
 ```
