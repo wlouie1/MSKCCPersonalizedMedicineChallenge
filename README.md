@@ -177,6 +177,7 @@ Due to the limited time and computational resources at my disposal, there are va
       * Explore alternatives to word2vec skip gram model, such as word2vec CBOW, GloVe, or fastText.
    * Train on 100% of the training data instead of 80%.
    * Fine tune the model hyperparameters, e.g. number of GRU units, maximum document and sentence lengths, batch sizes, etc. for each of the gene and variation text Hierarchical Attention Networks. The values used above were chosen arbitrarily based on what my laptop can handle, and the same values were used for both the gene and variation Hierarchical Attention Networks for simplicity, even though they should ideally be fine tuned separately.
+   * Consider concatenating gene and variation texts into one big document and just use one Hierarchical Attention Network.
    * Use external data.
 
 ## Dependencies
